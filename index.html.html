@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xenon Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #00d4ff, #7b2fff, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: #00d4ff; }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #00d4ff, #7b2fff);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        /* ===== CINEMA SLIDER ===== */
+        .cinema-slider {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: #0a0a0f;
+        }
+
+        .slides-track {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: slideShow 18s infinite;
+        }
+
+        @keyframes slideShow {
+            0%        { transform: translateX(0%); }
+            28%       { transform: translateX(0%); }
+            33.33%    { transform: translateX(-33.333%); }
+            61.33%    { transform: translateX(-33.333%); }
+            66.66%    { transform: translateX(-66.666%); }
+            94.66%    { transform: translateX(-66.666%); }
+            100%      { transform: translateX(0%); }
+        }
+
+        .slide {
+            width: 33.333%;
+            height: 100%;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Slide backgrounds */
+        .slide-1 {
+            background: linear-gradient(135deg, #0a0a0f 0%, #001a2e 40%, #003d5c 100%);
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0038 40%, #3d0080 100%);
+        }
+
+        .slide-3 {
+            background: linear-gradient(135deg, #0a0a0f 0%, #2e0015 40%, #6e0030 100%);
+        }
+
+        /* Glowing bg circle */
+        .slide::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(100px);
+            z-index: 0;
+        }
+
+        .slide-1::before { background: radial-gradient(circle, rgba(0,212,255,0.18), transparent 70%); }
+        .slide-2::before { background: radial-gradient(circle, rgba(123,47,255,0.22), transparent 70%); }
+        .slide-3::before { background: radial-gradient(circle, rgba(255,0,110,0.18), transparent 70%); }
+
+        .slide-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            z-index: 2;
+            padding: 0 80px;
+            width: 100%;
+        }
+
+        .slide-text {
+            max-width: 480px;
+        }
+
+        .slide-tag {
+            display: inline-block;
+            padding: 7px 18px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .slide-1 .slide-tag {
+            background: rgba(0,212,255,0.12);
+            border: 1px solid rgba(0,212,255,0.35);
+            color: #00d4ff;
+        }
+
+        .slide-2 .slide-tag {
+            background: rgba(123,47,255,0.15);
+            border: 1px solid rgba(123,47,255,0.4);
+            color: #a855f7;
+        }
+
+        .slide-3 .slide-tag {
+            background: rgba(255,0,110,0.12);
+            border: 1px solid rgba(255,0,110,0.35);
+            color: #ff006e;
+        }
+
+        .slide-text h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+        }
+
+        .slide-1 .slide-text h1 span { color: #00d4ff; }
+        .slide-2 .slide-text h1 span { color: #a855f7; }
+        .slide-3 .slide-text h1 span { color: #ff006e; }
+
+        .slide-text p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .slide-price-tag {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .slide-price-tag .from {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .slide-price-tag .amount {
+            font-size: 44px;
+            font-weight: 900;
+        }
+
+        .slide-1 .amount { color: #00d4ff; }
+        .slide-2 .amount { color: #a855f7; }
+        .slide-3 .amount { color: #ff006e; }
+
+        .slide-price-tag .currency {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .slide-buttons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .slide-btn-main {
+            padding: 13px 32px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            color: #0a0a0f;
+        }
+
+        .slide-1 .slide-btn-main { background: #00d4ff; }
+        .slide-2 .slide-btn-main { background: #a855f7; color: #fff; }
+        .slide-3 .slide-btn-main { background: #ff006e; color: #fff; }
+
+        .slide-btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+
+        .slide-btn-ghost {
+            padding: 13px 32px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            background: transparent;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            color: #fff;
+        }
+
+        .slide-1 .slide-btn-ghost { border: 1px solid rgba(0,212,255,0.35); }
+        .slide-2 .slide-btn-ghost { border: 1px solid rgba(168,85,247,0.35); }
+        .slide-3 .slide-btn-ghost { border: 1px solid rgba(255,0,110,0.35); }
+
+        .slide-btn-ghost:hover { background: rgba(255,255,255,0.07); }
+
+        /* ===== BIG PHONE MOCKUP IN SLIDE ===== */
+        .slide-phone-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .big-phone {
+            width: 220px;
+            height: 440px;
+            border-radius: 36px;
+            border: 3px solid;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 80px rgba(0,0,0,0.6);
+        }
+
+        .slide-1 .big-phone {
+            border-color: rgba(0,212,255,0.6);
+            background: linear-gradient(180deg, #001830 0%, #001020 100%);
+            box-shadow: 0 0 60px rgba(0,212,255,0.3), 0 0 120px rgba(0,212,255,0.1);
+        }
+
+        .slide-2 .big-phone {
+            border-color: rgba(123,47,255,0.6);
+            background: linear-gradient(180deg, #120030 0%, #0a0020 100%);
+            box-shadow: 0 0 60px rgba(123,47,255,0.35), 0 0 120px rgba(123,47,255,0.12);
+        }
+
+        .slide-3 .big-phone {
+            border-color: rgba(255,0,110,0.6);
+            background: linear-gradient(180deg, #2a0015 0%, #1a000d 100%);
+            box-shadow: 0 0 60px rgba(255,0,110,0.3), 0 0 120px rgba(255,0,110,0.1);
+        }
+
+        .big-phone-notch {
+            width: 70px;
+            height: 22px;
+            background: #0a0a0f;
+            border-radius: 0 0 16px 16px;
+            margin-top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .notch-cam {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .notch-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #0d0d1a;
+        }
+
+        .big-phone-screen {
+            flex: 1;
+            width: 100%;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow: hidden;
+        }
+
+        /* Fake UI inside phone screen */
+        .phone-ui-status {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 4px;
+        }
+
+        .phone-ui-status span {
+            font-size: 8px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .phone-ui-hero-img {
+            width: 100%;
+            height: 110px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-1 .phone-ui-hero-img {
+            background: linear-gradient(135deg, #00d4ff22, #00d4ff44);
+            border: 1px solid rgba(0,212,255,0.25);
+        }
+
+        .slide-2 .phone-ui-hero-img {
+            background: linear-gradient(135deg, #7b2fff22, #7b2fff44);
+            border: 1px solid rgba(123,47,255,0.25);
+        }
+
+        .slide-3 .phone-ui-hero-img {
+            background: linear-gradient(135deg, #ff006e22, #ff006e44);
+            border: 1px solid rgba(255,0,110,0.25);
+        }
+
+        .phone-ui-hero-img .phone-emoji {
+            font-size: 42px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .phone-ui-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .phone-ui-box {
+            flex: 1;
+            height: 40px;
+            border-radius: 7px;
+            opacity: 0.6;
+        }
+
+        .slide-1 .phone-ui-box { background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.2); }
+        .slide-2 .phone-ui-box { background: rgba(123,47,255,0.2); border: 1px solid rgba(123,47,255,0.25); }
+        .slide-3 .phone-ui-box { background: rgba(255,0,110,0.15); border: 1px solid rgba(255,0,110,0.2); }
+
+        .phone-ui-line {
+            height: 6px;
+            border-radius: 4px;
+            opacity: 0.35;
+        }
+
+        .phone-ui-line.full { width: 100%; }
+        .phone-ui-line.medium { width: 75%; }
+        .phone-ui-line.short { width: 50%; }
+
+        .slide-1 .phone-ui-line { background: #00d4ff; }
+        .slide-2 .phone-ui-line { background: #a855f7; }
+        .slide-3 .phone-ui-line { background: #ff006e; }
+
+        .phone-ui-btn-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .phone-ui-btn {
+            flex: 1;
+            height: 26px;
+            border-radius: 13px;
+            border: none;
+        }
+
+        .slide-1 .phone-ui-btn:first-child { background: rgba(0,212,255,0.7); }
+        .slide-1 .phone-ui-btn:last-child { background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.3); }
+        .slide-2 .phone-ui-btn:first-child { background: rgba(123,47,255,0.8); }
+        .slide-2 .phone-ui-btn:last-child { background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.3); }
+        .slide-3 .phone-ui-btn:first-child { background: rgba(255,0,110,0.7); }
+        .slide-3 .phone-ui-btn:last-child { background: rgba(255,0,110,0.15); border: 1px solid rgba(255,0,110,0.3); }
+
+        .phone-ui-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 6px;
+        }
+
+        .ui-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .slide-1 .ui-icon { background: rgba(0,212,255,0.12); border: 1px solid rgba(0,212,255,0.2); }
+        .slide-2 .ui-icon { background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.25); }
+        .slide-3 .ui-icon { background: rgba(255,0,110,0.12); border: 1px solid rgba(255,0,110,0.2); }
+
+        .big-phone-home {
+            width: 60px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin: 10px auto;
+        }
+
+        /* Floating side buttons */
+        .phone-side-btn {
+            position: absolute;
+            right: -5px;
+            width: 4px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .slide-1 .phone-side-btn { background: rgba(0,212,255,0.4); }
+        .slide-2 .phone-side-btn { background: rgba(123,47,255,0.4); }
+        .slide-3 .phone-side-btn { background: rgba(255,0,110,0.4); }
+
+        .phone-side-btn.top { height: 50px; top: 80px; }
+        .phone-side-btn.mid { height: 35px; top: 145px; }
+
+        /* Glow ring behind phone */
+        .phone-glow-ring {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(50px);
+            z-index: -1;
+        }
+
+        .slide-1 .phone-glow-ring { background: radial-gradient(circle, rgba(0,212,255,0.25), transparent 70%); }
+        .slide-2 .phone-glow-ring { background: radial-gradient(circle, rgba(123,47,255,0.3), transparent 70%); }
+        .slide-3 .phone-glow-ring { background: radial-gradient(circle, rgba(255,0,110,0.25), transparent 70%); }
+
+        /* Slide indicators */
+        .slider-dots {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.25);
+            transition: all 0.4s;
+        }
+
+        .dot.active {
+            width: 28px;
+            background: #fff;
+        }
+
+        /* Slide number */
+        .slide-counter {
+            position: absolute;
+            bottom: 35px;
+            right: 60px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 2px;
+            z-index: 10;
+        }
+
+        /* Scroll arrow */
+        .scroll-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.35);
+            font-size: 12px;
+            letter-spacing: 2px;
+            z-index: 10;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow::after {
+            content: '↓';
+            font-size: 18px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .section-title p {
+            color: rgba(255,255,255,0.45);
+            font-size: 16px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff, #7b2fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== PHONES SECTION ===== */
+        .phones-section {
+            padding: 100px 60px;
+        }
+
+        .phones-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .phone-card {
+            border-radius: 24px;
+            padding: 35px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s, box-shadow 0.4s;
+            cursor: pointer;
+        }
+
+        .phone-card:hover { transform: translateY(-12px); }
+
+        .card-low {
+            background: linear-gradient(145deg, rgba(0,212,255,0.08), rgba(0,212,255,0.02));
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+
+        .card-low:hover {
+            box-shadow: 0 25px 60px rgba(0,212,255,0.2);
+            border-color: rgba(0,212,255,0.5);
+        }
+
+        .card-middle {
+            background: linear-gradient(145deg, rgba(123,47,255,0.15), rgba(123,47,255,0.04));
+            border: 2px solid rgba(123,47,255,0.4);
+            transform: scale(1.03);
+        }
+
+        .card-middle:hover {
+            transform: scale(1.03) translateY(-12px);
+            box-shadow: 0 25px 60px rgba(123,47,255,0.35);
+            border-color: rgba(123,47,255,0.7);
+        }
+
+        .card-upper {
+            background: linear-gradient(145deg, rgba(255,0,110,0.08), rgba(255,0,110,0.02));
+            border: 1px solid rgba(255,0,110,0.2);
+        }
+
+        .card-upper:hover {
+            box-shadow: 0 25px 60px rgba(255,0,110,0.2);
+            border-color: rgba(255,0,110,0.5);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: linear-gradient(135deg, #7b2fff, #ff006e);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* ===== DEMO PHONE IMAGE IN CARD ===== */
+        .card-phone-image {
+            width: 130px;
+            height: 240px;
+            margin: 0 auto 28px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-phone-body {
+            width: 100px;
+            height: 210px;
+            border-radius: 22px;
+            border: 2.5px solid;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.4s;
+        }
+
+        .card-low .card-phone-body {
+            border-color: rgba(0,212,255,0.7);
+            background: linear-gradient(180deg, #001525 0%, #000d18 100%);
+            box-shadow: 0 0 30px rgba(0,212,255,0.3), 0 0 60px rgba(0,212,255,0.1);
+        }
+
+        .card-middle .card-phone-body {
+            border-color: rgba(123,47,255,0.7);
+            background: linear-gradient(180deg, #100025 0%, #080018 100%);
+            box-shadow: 0 0 30px rgba(123,47,255,0.35), 0 0 60px rgba(123,47,255,0.12);
+        }
+
+        .card-upper .card-phone-body {
+            border-color: rgba(255,0,110,0.7);
+            background: linear-gradient(180deg, #250010 0%, #180008 100%);
+            box-shadow: 0 0 30px rgba(255,0,110,0.3), 0 0 60px rgba(255,0,110,0.1);
+        }
+
+        .phone-card:hover .card-phone-body {
+            box-shadow: 0 0 50px rgba(0,212,255,0.5), 0 0 90px rgba(0,212,255,0.18);
+        }
+
+        .card-middle:hover .card-phone-body {
+            box-shadow: 0 0 50px rgba(123,47,255,0.55), 0 0 90px rgba(123,47,255,0.2);
+        }
+
+        .card-upper:hover .card-phone-body {
+            box-shadow: 0 0 50px rgba(255,0,110,0.5), 0 0 90px rgba(255,0,110,0.18);
+        }
+
+        /* Card phone notch */
+        .cpn {
+            width: 42px;
+            height: 14px;
+            background: #0a0a0f;
+            border-radius: 0 0 10px 10px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .cpn-cam {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #1a1a2e;
+        }
+
+        .cpn-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #0d0d1a;
+        }
+
+        /* Card phone screen content */
+        .cps {
+            flex: 1;
+            width: 100%;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            overflow: hidden;
+        }
+
+        .cps-banner {
+            width: 100%;
+            height: 68px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .card-low .cps-banner {
+            background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.3));
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+
+        .card-middle .cps-banner {
+            background: linear-gradient(135deg, rgba(123,47,255,0.2), rgba(123,47,255,0.35));
+            border: 1px solid rgba(123,47,255,0.25);
+        }
+
+        .card-upper .cps-banner {
+            background: linear-gradient(135deg, rgba(255,0,110,0.15), rgba(255,0,110,0.3));
+            border: 1px solid rgba(255,0,110,0.2);
+        }
+
+        .cps-line { height: 4px; border-radius: 3px; opacity: 0.4; }
+        .cps-line.f { width: 100%; }
+        .cps-line.m { width: 72%; }
+        .cps-line.s { width: 50%; }
+
+        .card-low .cps-line { background: #00d4ff; }
+        .card-middle .cps-line { background: #a855f7; }
+        .card-upper .cps-line { background: #ff006e; }
+
+        .cps-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        .cps-box {
+            flex: 1;
+            height: 24px;
+            border-radius: 5px;
+            opacity: 0.5;
+        }
+
+        .card-low .cps-box { background: rgba(0,212,255,0.2); }
+        .card-middle .cps-box { background: rgba(123,47,255,0.25); }
+        .card-upper .cps-box { background: rgba(255,0,110,0.2); }
+
+        .cps-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3px;
+        }
+
+        .cps-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-low .cps-icon { background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.2); }
+        .card-middle .cps-icon { background: rgba(123,47,255,0.2); border: 1px solid rgba(123,47,255,0.25); }
+        .card-upper .cps-icon { background: rgba(255,0,110,0.15); border: 1px solid rgba(255,0,110,0.2); }
+
+        /* Camera bump on back (shown as side decor) */
+        .camera-bump {
+            position: absolute;
+            top: 40px;
+            right: -8px;
+            width: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .cam-lens {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid;
+        }
+
+        .card-low .cam-lens { border-color: rgba(0,212,255,0.5); background: rgba(0,212,255,0.1); }
+        .card-middle .cam-lens { border-color: rgba(123,47,255,0.5); background: rgba(123,47,255,0.1); }
+        .card-upper .cam-lens { border-color: rgba(255,0,110,0.5); background: rgba(255,0,110,0.1); }
+
+        .card-phone-home {
+            width: 32px;
+            height: 3px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 2px;
+            margin: 6px auto;
+            flex-shrink: 0;
+        }
+
+        /* Side buttons */
+        .cps-side-btn {
+            position: absolute;
+            right: -4px;
+            width: 3px;
+            border-radius: 2px;
+        }
+
+        .card-low .cps-side-btn { background: rgba(0,212,255,0.5); }
+        .card-middle .cps-side-btn { background: rgba(123,47,255,0.5); }
+        .card-upper .cps-side-btn { background: rgba(255,0,110,0.5); }
+
+        .cps-side-btn.t { height: 30px; top: 50px; }
+        .cps-side-btn.b { height: 20px; top: 90px; }
+
+        /* Glow orb under phone in card */
+        .card-glow-orb {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            border-radius: 50%;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .card-low .card-glow-orb { background: rgba(0,212,255,0.3); }
+        .card-middle .card-glow-orb { background: rgba(123,47,255,0.35); }
+        .card-upper .card-glow-orb { background: rgba(255,0,110,0.3); }
+
+        /* Card text */
+        .tier-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .card-low .tier-label { color: #00d4ff; }
+        .card-middle .tier-label { color: #a855f7; }
+        .card-upper .tier-label { color: #ff006e; }
+
+        .phone-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .phone-card .price {
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 18px;
+        }
+
+        .card-low .price { color: #00d4ff; }
+        .card-middle .price { color: #a855f7; }
+        .card-upper .price { color: #ff006e; }
+
+        .price span {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .features-list li::before {
+            content: '✓';
+            font-weight: 900;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .card-low .features-list li::before { background: rgba(0,212,255,0.15); color: #00d4ff; }
+        .card-middle .features-list li::before { background: rgba(123,47,255,0.2); color: #a855f7; }
+        .card-upper .features-list li::before { background: rgba(255,0,110,0.15); color: #ff006e; }
+
+        .card-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .card-low .card-btn { background: rgba(0,212,255,0.12); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+        .card-low .card-btn:hover { background: #00d4ff; color: #0a0a0f; }
+
+        .card-middle .card-btn { background: linear-gradient(135deg, #7b2fff, #a855f7); color: #fff; }
+        .card-middle .card-btn:hover { box-shadow: 0 8px 25px rgba(123,47,255,0.5); transform: translateY(-2px); }
+
+        .card-upper .card-btn { background: rgba(255,0,110,0.12); color: #ff006e; border: 1px solid rgba(255,0,110,0.3); }
+        .card-upper .card-btn:hover { background: #ff006e; color: #fff; }
+
+        /* ===== FEATURES STRIP ===== */
+        .features-strip {
+            padding: 50px 60px;
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .strip-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .strip-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .strip-icon { font-size: 32px; margin-bottom: 5px; }
+        .strip-item h4 { font-size: 15px; font-weight: 700; }
+        .strip-item p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #00d4ff, #7b2fff, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links { display: flex; gap: 25px; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+        .footer-links a:hover { color: #00d4ff; }
+        .footer-copy { color: rgba(255,255,255,0.3); font-size: 13px; }
+
+        /* ===== PARTICLES ===== */
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-120px) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .slide-content { gap: 40px; padding: 0 40px; }
+            .big-phone { width: 180px; height: 370px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .slide-content { flex-direction: column; gap: 25px; padding: 20px; text-align: center; }
+            .slide-buttons { justify-content: center; }
+            .big-phone { width: 140px; height: 290px; }
+            .phones-section { padding: 60px 20px; }
+            .phones-grid { grid-template-columns: 1fr; gap: 20px; }
+            .card-middle { transform: scale(1); }
+            .card-middle:hover { transform: translateY(-12px); }
+            .features-strip { padding: 40px 20px; }
+            .strip-grid { grid-template-columns: repeat(2, 1fr); }
+            footer { padding: 30px 20px; flex-direction: column; text-align: center; }
+            .scroll-arrow { display: none; }
+            .slide-counter { right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">XENON</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Phones</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Support</a></li>
+        </ul>
+        <button class="nav-btn">Shop Now</button>
+    </nav>
+
+    <!-- ===== CINEMA SLIDER ===== -->
+    <section class="cinema-slider">
+        <div class="slides-track">
+
+            <!-- SLIDE 1 — Xenon Lite -->
+            <div class="slide slide-1">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <div class="slide-tag">✦ Essential Series</div>
+                        <h1>Meet the<br><span>Xenon Lite</span></h1>
+                        <p>Smart, sleek and surprisingly powerful. The perfect phone for everyday life — without breaking the bank.</p>
+                        <div class="slide-price-tag">
+                            <span class="from">Starting from</span>
+                            <span class="amount">$149</span>
+                            <span class="currency">USD</span>
+                        </div>
+                        <div class="slide-buttons">
+                            <button class="slide-btn-main">Buy Now</button>
+                            <button class="slide-btn-ghost">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="slide-phone-wrap">
+                        <div class="phone-glow-ring"></div>
+                        <div class="big-phone">
+                            <div class="big-phone-notch">
+                                <div class="notch-cam"></div>
+                                <div class="notch-dot"></div>
+                            </div>
+                            <div class="big-phone-screen">
+                                <div class="phone-ui-status">
+                                    <span>9:41</span>
+                                    <span>▮▮▮ WiFi</span>
+                                </div>
+                                <div class="phone-ui-hero-img">
+                                    <span class="phone-emoji">📱</span>
+                                </div>
+                                <div class="phone-ui-line full" style="margin-top:6px"></div>
+                                <div class="phone-ui-line medium"></div>
+                                <div class="phone-ui-line short"></div>
+                                <div class="phone-ui-row" style="margin-top:6px">
+                                    <div class="phone-ui-box"></div>
+                                    <div class="phone-ui-box"></div>
+                                </div>
+                                <div class="phone-ui-btn-row" style="margin-top:8px">
+                                    <button class="phone-ui-btn"></button>
+                                    <button class="phone-ui-btn"></button>
+                                </div>
+                                <div class="phone-ui-icons" style="margin-top:10px">
+                                    <div class="ui-icon">📷</div>
+                                    <div class="ui-icon">🎵</div>
+                                    <div class="ui-icon">🌐</div>
+                                    <div class="ui-icon">⚙️</div>
+                                </div>
+                            </div>
+                            <div class="big-phone-home"></div>
+                        </div>
+                        <div class="phone-side-btn top"></div>
+                        <div class="phone-side-btn mid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2 — Xenon Volt -->
+            <div class="slide slide-2">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <div class="slide-tag">⭐ Most Popular</div>
+                        <h1>Power Up with<br><span>Xenon Volt</span></h1>
+                        <p>120Hz AMOLED display, triple cameras and all-day battery. The middle ground that feels like the top.</p>
+                        <div class="slide-price-tag">
+                            <span class="from">Starting from</span>
+                            <span class="amount">$399</span>
+                            <span class="currency">USD</span>
+                        </div>
+                        <div class="slide-buttons">
+                            <button class="slide-btn-main">Buy Now</button>
+                            <button class="slide-btn-ghost">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="slide-phone-wrap">
+                        <div class="phone-glow-ring"></div>
+                        <div class="big-phone">
+                            <div class="big-phone-notch">
+                                <div class="notch-cam"></div>
+                                <div class="notch-dot"></div>
+                            </div>
+                            <div class="big-phone-screen">
+                                <div class="phone-ui-status">
+                                    <span>9:41</span>
+                                    <span>▮▮▮ 5G</span>
+                                </div>
+                                <div class="phone-ui-hero-img">
+                                    <span class="phone-emoji">⚡</span>
+                                </div>
+                                <div class="phone-ui-line full" style="margin-top:6px"></div>
+                                <div class="phone-ui-line medium"></div>
+                                <div class="phone-ui-line short"></div>
+                                <div class="phone-ui-row" style="margin-top:6px">
+                                    <div class="phone-ui-box"></div>
+                                    <div class="phone-ui-box"></div>
+                                </div>
+                                <div class="phone-ui-btn-row" style="margin-top:8px">
+                                    <button class="phone-ui-btn"></button>
+                                    <button class="phone-ui-btn"></button>
+                                </div>
+                                <div class="phone-ui-icons" style="margin-top:10px">
+                                    <div class="ui-icon">📸</div>
+                                    <div class="ui-icon">🎮</div>
+                                    <div class="ui-icon">🌐</div>
+                                    <div class="ui-icon">🤖</div>
+                                </div>
+                            </div>
+                            <div class="big-phone-home"></div>
+                        </div>
+                        <div class="phone-side-btn top"></div>
+                        <div class="phone-side-btn mid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3 — Xenon Apex -->
+            <div class="slide slide-3">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <div class="slide-tag">👑 Flagship Series</div>
+                        <h1>Rule All with<br><span>Xenon Apex</span></h1>
+                        <p>200MP quad cameras, ProOLED 144Hz display and 100W turbo charging. This is no ordinary phone — this is Apex.</p>
+                        <div class="slide-price-tag">
+                            <span class="from">Starting from</span>
+                            <span class="amount">$899</span>
+                            <span class="currency">USD</span>
+                        </div>
+                        <div class="slide-buttons">
+                            <button class="slide-btn-main">Buy Now</button>
+                            <button class="slide-btn-ghost">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="slide-phone-wrap">
+                        <div class="phone-glow-ring"></div>
+                        <div class="big-phone">
+                            <div class="big-phone-notch">
+                                <div class="notch-cam"></div>
+                                <div class="notch-dot"></div>
+                            </div>
+                            <div class="big-phone-screen">
+                                <div class="phone-ui-status">
+                                    <span>9:41</span>
+                                    <span>▮▮▮ 5G+</span>
+                                </div>
+                                <div class="phone-ui-hero-img">
+                                    <span class="phone-emoji">👑</span>
+                                </div>
+                                <div class="phone-ui-line full" style="margin-top:6px"></div>
+                                <div class="phone-ui-line medium"></div>
+                                <div class="phone-ui-line short"></div>
+                                <div class="phone-ui-row" style="margin-top:6px">
+                                    <div class="phone-ui-box"></div>
+                                    <div class="phone-ui-box"></div>
+                                </div>
+                                <div class="phone-ui-btn-row" style="margin-top:8px">
+                                    <button class="phone-ui-btn"></button>
+                                    <button class="phone-ui-btn"></button>
+                                </div>
+                                <div class="phone-ui-icons" style="margin-top:10px">
+                                    <div class="ui-icon">🔭</div>
+                                    <div class="ui-icon">🎬</div>
+                                    <div class="ui-icon">🛡️</div>
+                                    <div class="ui-icon">🤖</div>
+                                </div>
+                            </div>
+                            <div class="big-phone-home"></div>
+                        </div>
+                        <div class="phone-side-btn top"></div>
+                        <div class="phone-side-btn mid"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end slides-track -->
+
+        <!-- Dots -->
+        <div class="slider-dots">
+            <div class="dot active" id="dot0"></div>
+            <div class="dot" id="dot1"></div>
+            <div class="dot" id="dot2"></div>
+        </div>
+
+        <div class="slide-counter" id="slideCounter">01 / 03</div>
+        <div class="scroll-arrow">SCROLL</div>
+
+    </section><!-- end cinema-slider -->
+
+
+    <!-- ===== PHONES PRODUCT SECTION ===== -->
+    <section class="phones-section">
+        <div class="section-title">
+            <h2>Choose Your <span class="gradient-text">Xenon</span></h2>
+            <p>Three ranges. One mission — giving you the best.</p>
+        </div>
+
+        <div class="phones-grid">
+
+            <!-- LOW — Xenon Lite -->
+            <div class="phone-card card-low">
+                <div class="card-phone-image">
+                    <div class="card-glow-orb"></div>
+                    <div class="card-phone-body">
+                        <div class="cpn">
+                            <div class="cpn-cam"></div>
+                            <div class="cpn-dot"></div>
+                        </div>
+                        <div class="cps">
+                            <div class="cps-banner">📱</div>
+                            <div class="cps-line f"></div>
+                            <div class="cps-line m"></div>
+                            <div class="cps-row">
+                                <div class="cps-box"></div>
+                                <div class="cps-box"></div>
+                            </div>
+                            <div class="cps-icons">
+                                <div class="cps-icon">📷</div>
+                                <div class="cps-icon">🎵</div>
+                                <div class="cps-icon">🌐</div>
+                            </div>
+                        </div>
+                        <div class="card-phone-home"></div>
+                        <div class="cps-side-btn t"></div>
+                        <div class="cps-side-btn b"></div>
+                    </div>
+                    <div class="camera-bump">
+                        <div class="cam-lens"></div>
+                        <div class="cam-lens"></div>
+                    </div>
+                </div>
+                <div class="tier-label">Essential Series</div>
+                <h3>Xenon Lite</h3>
+                <div class="price">$149<span> /USD</span></div>
+                <ul class="features-list">
+                    <li>6.1" HD+ Display</li>
+                    <li>12MP Dual Camera</li>
+                    <li>4GB RAM / 64GB</li>
+                    <li>4000mAh Battery</li>
+                    <li>Android 14</li>
+                </ul>
+                <button class="card-btn">BUY NOW</button>
+            </div>
+
+            <!-- MIDDLE — Xenon Volt -->
+            <div class="phone-card card-middle">
+                <div class="popular-badge">⭐ MOST POPULAR</div>
+                <div class="card-phone-image">
+                    <div class="card-glow-orb"></div>
+                    <div class="card-phone-body">
+                        <div class="cpn">
+                            <div class="cpn-cam"></div>
+                            <div class="cpn-dot"></div>
+                        </div>
+                        <div class="cps">
+                            <div class="cps-banner">⚡</div>
+                            <div class="cps-line f"></div>
+                            <div class="cps-line m"></div>
+                            <div class="cps-row">
+                                <div class="cps-box"></div>
+                                <div class="cps-box"></div>
+                            </div>
+                            <div class="cps-icons">
+                                <div class="cps-icon">📸</div>
+                                <div class="cps-icon">🎮</div>
+                                <div class="cps-icon">🤖</div>
+                            </div>
+                        </div>
+                        <div class="card-phone-home"></div>
+                        <div class="cps-side-btn t"></div>
+                        <div class="cps-side-btn b"></div>
+                    </div>
+                    <div class="camera-bump">
+                        <div class="cam-lens"></div>
+                        <div class="cam-lens"></div>
+                        <div class="cam-lens"></div>
+                    </div>
+                </div>
+                <div class="tier-label">Volt Series</div>
+                <h3>Xenon Volt</h3>
+                <div class="price">$399<span> /USD</span></div>
+                <ul class="features-list">
+                    <li>6.6" AMOLED 120Hz</li>
+                    <li>50MP Triple Camera</li>
+                    <li>8GB RAM / 256GB</li>
+                    <li>5000mAh + 45W Fast</li>
+                    <li>Android 14 + AI Core</li>
+                </ul>
+                <button class="card-btn">BUY NOW</button>
+            </div>
+
+            <!-- UPPER — Xenon Apex -->
+            <div class="phone-card card-upper">
+                <div class="card-phone-image">
+                    <div class="card-glow-orb"></div>
+                    <div class="card-phone-body">
+                        <div class="cpn">
+                            <div class="cpn-cam"></div>
+                            <div class="cpn-dot"></div>
+                        </div>
+                        <div class="cps">
+                            <div class="cps-banner">👑</div>
+                            <div class="cps-line f"></div>
+                            <div class="cps-line m"></div>
+                            <div class="cps-row">
+                                <div class="cps-box"></div>
+                                <div class="cps-box"></div>
+                            </div>
+                            <div class="cps-icons">
+                                <div class="cps-icon">🔭</div>
+                                <div class="cps-icon">🎬</div>
+                                <div class="cps-icon">🛡️</div>
+                            </div>
+                        </div>
+                        <div class="card-phone-home"></div>
+                        <div class="cps-side-btn t"></div>
+                        <div class="cps-side-btn b"></div>
+                    </div>
+                    <div class="camera-bump">
+                        <div class="cam-lens"></div>
+                        <div class="cam-lens"></div>
+                        <div class="cam-lens"></div>
+                        <div class="cam-lens"></div>
+                    </div>
+                </div>
+                <div class="tier-label">Apex Series</div>
+                <h3>Xenon Apex</h3>
+                <div class="price">$899<span> /USD</span></div>
+                <ul class="features-list">
+                    <li>6.8" ProOLED 144Hz</li>
+                    <li>200MP Quad Camera</li>
+                    <li>16GB RAM / 512GB</li>
+                    <li>6000mAh + 100W Turbo</li>
+                    <li>Android 14 + Xenon AI</li>
+                </ul>
+                <button class="card-btn">BUY NOW</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FEATURES STRIP -->
+    <section class="features-strip">
+        <div class="strip-grid">
+            <div class="strip-item">
+                <div class="strip-icon">🛡️</div>
+                <h4>2-Year Warranty</h4>
+                <p>Every Xenon device comes with full manufacturer protection.</p>
+            </div>
+            <div class="strip-item">
+                <div class="strip-icon">🚀</div>
+                <h4>Free Shipping</h4>
+                <p>Fast, free delivery on all orders across the country.</p>
+            </div>
+            <div class="strip-item">
+                <div class="strip-icon">🔄</div>
+                <h4>30-Day Returns</h4>
+                <p>Not satisfied? Return it hassle-free within 30 days.</p>
+            </div>
+            <div class="strip-item">
+                <div class="strip-icon">💬</div>
+                <h4>24/7 Support</h4>
+                <p>Our expert team is always here to help you, anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">XENON</div>
+        <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="footer-copy">© 2025 Xenon Mobile. All rights reserved.</div>
+    </footer>
+
+    <!-- PARTICLES + DOT SYNC SCRIPT -->
+    <script>
+        // Floating particles
+        const colors = ['rgba(0,212,255,0.6)', 'rgba(123,47,255,0.6)', 'rgba(255,0,110,0.6)'];
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            p.style.cssText = `
+                width:${size}px; height:${size}px;
+                left:${Math.random()*100}%;
+                background:${colors[Math.floor(Math.random()*3)]};
+                animation-duration:${Math.random()*18+12}s;
+                animation-delay:${Math.random()*15}s;
+                filter: blur(1px);
+            `;
+            document.body.appendChild(p);
+        }
+
+        // Dot & counter sync with CSS animation
+        const totalDuration = 18000; // 18s matches CSS
+        const slideTimings = [0, 6000, 12000]; // approx when each slide is active
+        const counters = ['01 / 03', '02 / 03', '03 / 03'];
+        const dots = [
+            document.getElementById('dot0'),
+            document.getElementById('dot1'),
+            document.getElementById('dot2'),
+        ];
+        const counterEl = document.getElementById('slideCounter');
+
+        let currentSlide = 0;
+
+        function updateDots(index) {
+            dots.forEach((d, i) => {
+                d.classList.toggle('active', i === index);
+            });
+            counterEl.textContent = counters[index];
+        }
+
+        // Sync timing: 0s→slide1, 6s→slide2, 12s→slide3, 18s→repeat
+        function syncDots() {
+            const now = (Date.now() % totalDuration);
+            let idx = 0;
+            if (now >= 12000) idx = 2;
+            else if (now >= 6000) idx = 1;
+            else idx = 0;
+            if (idx !== currentSlide) {
+                currentSlide = idx;
+                updateDots(idx);
+            }
+        }
+
+        setInterval(syncDots, 100);
+    </script>
+
+</body>
+</html>
